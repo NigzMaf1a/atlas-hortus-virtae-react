@@ -34,6 +34,12 @@ export default function Login() {
 
         const { token, user } = await login(email, password)
 
+        if (Number(user.sector_id) !== 5) {
+            Toaster('You are logging in from the wrong module', 'danger')
+            Toaster('Please login from the right module', 'info')
+            return
+        }
+
         Toaster('Login successful', 'success')
 
         Session.storeToken(token)
@@ -42,7 +48,11 @@ export default function Login() {
         resetFields()
 
         setTimeout(() => {
-            navigate('/', { replace: true })
+            switch (user.reg_type.trim().toLowerCase()) {
+                case 'customer':
+                    navigate('/customer/home', { replace: true })
+                    break
+            }
         }, 1500)
     }
 

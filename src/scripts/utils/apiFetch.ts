@@ -1,6 +1,6 @@
-import link from "./links"
+import liveLink from "./links";
 
-const BASE_URL = link;
+const BASE_URL = liveLink["devLogin"];
 
 export default async function apiFetch<T>(
     endpoint: string,

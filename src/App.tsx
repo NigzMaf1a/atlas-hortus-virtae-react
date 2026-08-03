@@ -6,6 +6,9 @@ import SplashScreen from './features/SplashScreen'
 import LandingPage from './features/LandingPage'
 import Login from './features/Login'
 
+//homes
+import CustomerHome from './features/home/CustomerHome'
+
 
 export default function App() {
   return (
@@ -14,6 +17,10 @@ export default function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/splashscreen" element={<SplashScreen />} />
         <Route path="/login" element={<Login />} />
+
+        //homes
+        <Route path="/customer/home" element={<CustomerHome />} />
+
       </Routes>
 
       <HotToaster
