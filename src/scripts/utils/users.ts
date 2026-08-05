@@ -40,5 +40,5 @@ export default class Users {
     ): Promise<T> => {
         console.log('Token', this.token)
         return classApiFetch<T>(this.url, this.token, endpoint, options)
-    };
+    }
 }

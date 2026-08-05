@@ -4,7 +4,8 @@ const BASE_URL = liveLink["devLogin"];
 
 export default async function apiFetch<T>(
     endpoint: string,
-    options: RequestInit = {}
+    options: RequestInit = {},
+    link: string = BASE_URL
 ): Promise<T> {
 
     const fullUrl =
