@@ -6,4 +6,8 @@ export default class StylesTwo {
             label: {}
         }
     }
+
+    static page(): string {
+        return `flex flex-col px-2`
+    }
 }

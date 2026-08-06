@@ -7,6 +7,10 @@ import { useState, useEffect } from "react"
 import Page from "../../components/Page"
 import FancyLoad from "../../views/FancyLoad"
 import Tray from "../../components/Tray"
+import Toaster from "../../scripts/utils/Toaster"
+
+//styles
+import StylesTwo from "../../styles/components"
 
 export default function CustomerHome() {
     const [showHotProducts, setShowHotProducts] = useState<boolean>(false)
@@ -22,27 +26,57 @@ export default function CustomerHome() {
         saleItems: data.sale_items
     })
 
+    console.log('All deh data deh', processedData.hotProducts)
+
     useEffect(() => {
+        let timeout: ReturnType<typeof setTimeout> | undefined
+
         if (!data.loading) {
-            setShowHotProducts(processedData.hotProducts.length > 0)
-            setShowRecentPurchases(processedData.recentPurchases.length > 0)
-            setShowRecentPayments(processedData.recentPayments.length > 0)
+            setShowHotProducts(true)
+            setShowRecentPurchases(true)
+            setShowRecentPayments(true)
+
+            timeout = setTimeout(() => {
+                setShowHotProducts(processedData.hotProducts.length > 0)
+                setShowRecentPurchases(processedData.recentPurchases.length > 0)
+                setShowRecentPayments(processedData.recentPayments.length > 0)
+            }, 5000)
         }
-    }, [data])
+
+        return () => {
+            if (timeout) {
+                clearTimeout(timeout)
+            }
+        };
+    }, [data.loading, processedData])
 
     return (
-        <Page>
+        <Page
+            className={StylesTwo.page()}
+        >
             <FancyLoad loading={data.loading} />
 
-            <Tray show={showHotProducts}>
+            <Tray
+                show={showHotProducts}
+                data={processedData.hotProducts}
+                noDataMessage="No hot products found"
+            >
                 Hot products
             </Tray>
 
-            <Tray show={showRecentPurchases}>
+            <Tray
+                show={showRecentPurchases}
+                data={processedData.hotProducts}
+                noDataMessage="No recent purchases found"
+            >
                 Recent Purchases
             </Tray>
 
-            <Tray show={showRecentPayments}>
+            <Tray
+                show={showRecentPayments}
+                data={processedData.hotProducts}
+                noDataMessage="No recent payments found"
+            >
                 Recent Payments
             </Tray>
         </Page>

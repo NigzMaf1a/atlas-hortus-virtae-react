@@ -13,6 +13,8 @@ import type { Colors } from "../styles/colors"
 interface Props {
     children: React.ReactNode
     className?: string
+    data: unknown[]
+    noDataMessage: string
     show?: boolean
     color?: Colors
     title?: string
@@ -23,6 +25,8 @@ export default function Tray(
     {
         children,
         className = '',
+        data,
+        noDataMessage,
         show = true,
         color = 'white',
         title = '',
@@ -63,13 +67,15 @@ export default function Tray(
         }
     }, [title])
 
+    const currColor: Colors = data.length > 0 ? color : 'red'
+
     return (
         <CustomDiv
-            className={`${Styles.tray(color)} ${className}`}
+            className={`${Styles.tray(currColor)} ${className}`}
             show={show}
         >
             {
-                showTitle && title && (
+                data.length > 0 && showTitle && title && (
                     <CustomDiv
                         className={(() => {
                             const defaults = 'rounded-lg w-full flex justify-center items-center'
@@ -114,7 +120,14 @@ export default function Tray(
                 )
             }
 
-            {children}
+            {
+                data.length > 0 ? children : <CustomDiv>
+                    <Text
+                        text={noDataMessage}
+                        color={'white'}
+                    />
+                </CustomDiv>
+            }
         </CustomDiv>
     )
 }

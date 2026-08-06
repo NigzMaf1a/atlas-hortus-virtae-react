@@ -172,9 +172,9 @@ export default class Styles {
                 bg = 'bg-green-500'
         }
 
-        const dim = 'w-full max-h-[300px] overflow-y-auto'
+        const dim = 'w-full grow overflow-y-auto'
         const flex = 'flex flex-col items-center gap-1'
-        const margin = 'mt-2 py-2 px-2'
+        const margin = 'mt-2 py-2 px-2 rounded-lg'
 
         return `${bg} ${dim} ${flex} ${margin}`
     }

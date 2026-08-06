@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
 //components
@@ -7,6 +7,7 @@ import CustomDiv from "../components/CustomDiv"
 import ButtonAdv from "../components/ButtonAdv"
 import LabelledInput from "../components/LabelledInput"
 import LabelledDropdown, { type DropDownValue } from "../components/LabelledDropdown"
+import FancyLoad from "../views/FancyLoad"
 
 //styles
 import Styles from "../styles/sections"
@@ -14,7 +15,7 @@ import Styles from "../styles/sections"
 //utils
 import Toaster from "../scripts/utils/Toaster"
 import AuthUtils, { login, getOutlets, getRoles } from "../scripts/utils/login"
-import type { HortusVirtaeCred, HortusLoginResponse } from "../scripts/interfaces/login"
+import type { HortusLoginResponse } from "../scripts/interfaces/login"
 import Session from "../scripts/utils/session"
 import type Role from "../scripts/interfaces/roles"
 
@@ -27,6 +28,7 @@ export default function Login() {
     const [showRoleDropDown, setShowRoleDropDown] = useState<boolean>(false)
     const [roles, setRoles] = useState<DropDownValue[]>([])
     const [outlets, setOutlets] = useState<DropDownValue[]>([])
+    const [loading, setLoading] = useState<boolean>(false)
 
     const [rolz, setRolz] = useState<Role[]>([])
 
@@ -34,30 +36,42 @@ export default function Login() {
 
     useEffect(() => {
         async function init() {
-            const r = await getRoles()
-            const o = await getOutlets()
+            setLoading(true)
 
-            const roleValues: DropDownValue[] = r.filter(
-                r => Number(r.sector_id) === 5
-            ).map((a): DropDownValue => {
-                return {
-                    label: a.role_title,
-                    value: a.role_id as number
-                }
-            })
+            try {
+                console.log("Loading login data...")
 
-            const outletValues: DropDownValue[] = o.map((a): DropDownValue => {
-                return {
-                    label: a.name,
-                    value: a.id as number
-                }
-            })
+                const [r, o] = await Promise.all([
+                    getRoles(),
+                    getOutlets()
+                ])
 
-            setRolz(r)
-            setRoles(roleValues)
-            setOutlets(outletValues)
-            console.log('Outlets', o)
-            setShowRoleDropDown(true)
+                console.log("Roles:", r)
+                console.log("Outlets:", o)
+
+                const roleValues: DropDownValue[] = r
+                    .filter(role => Number(role.sector_id) === 5)
+                    .map(role => ({
+                        label: role.role_title,
+                        value: role.role_id as number
+                    }))
+
+                const outletValues: DropDownValue[] = o.map(outlet => ({
+                    label: outlet.name,
+                    value: outlet.id as number
+                }))
+
+                setRolz(r)
+                setRoles(roleValues)
+                setOutlets(outletValues)
+                setShowRoleDropDown(true)
+            } catch (err) {
+                console.error("Failed to initialize login page:", err)
+                Toaster("Failed to load login data", "danger")
+            } finally {
+                console.log("Loading finished")
+                setLoading(false)
+            }
         }
 
         init()
@@ -74,10 +88,17 @@ export default function Login() {
             return
         }
 
-        const { token, user, outlet_id } = await login({
+        console.log({
+            email,
+            password,
+            outlet_id: outletId,
+            type: typeof outletId
+        })
+
+        const { token, user }: HortusLoginResponse = await login({
             email: email,
             password: password,
-            outlet_id: outletId
+            outlet_id: Number(outletId)
         })
 
         if (Number(user.sector_id) !== 5) {
@@ -90,7 +111,7 @@ export default function Login() {
         Toaster('Login successful', 'success')
 
         Session.storeToken(token)
-        Session.storeOutletId(outlet_id)
+        Session.storeOutletId(Number(outletId))
         Session.storeUser(user)
 
         resetFields()
@@ -125,6 +146,7 @@ export default function Login() {
 
     return (
         <Page className={Styles.centered()}>
+            <FancyLoad loading={loading} />
             <CustomDiv className={Styles.form()}>
                 <LabelledInput
                     label="Email"

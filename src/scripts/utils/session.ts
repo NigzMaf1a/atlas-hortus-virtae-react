@@ -30,10 +30,19 @@ export default class Session {
 
 
     static getOutletId(): number {
-        const tokenString = localStorage.getItem('outlet_id')
-        const id = JSON.parse(tokenString as string)
-        if (typeof id === 'undefined' || id === null) throw new Error('User is undefined')
-        return id as number
+        const outletId = localStorage.getItem("outlet_id")
+
+        if (outletId === null) {
+            throw new Error("Outlet ID is undefined")
+        }
+
+        const id = Number(outletId)
+
+        if (Number.isNaN(id)) {
+            throw new Error("Invalid outlet ID")
+        }
+
+        return id
     }
 
     static sessionStatus(): boolean {

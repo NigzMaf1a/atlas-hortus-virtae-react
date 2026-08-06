@@ -9,7 +9,7 @@ export default async function apiFetch<T>(
 ): Promise<T> {
 
     const fullUrl =
-        `${BASE_URL.replace(/\/$/, "")}/${endpoint.replace(/^\//, "")}`
+        `${link.replace(/\/$/, "")}/${endpoint.replace(/^\//, "")}`
 
 
     const res = await fetch(fullUrl, {

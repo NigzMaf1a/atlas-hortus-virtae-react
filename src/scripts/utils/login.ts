@@ -14,7 +14,7 @@ export async function login({ email, password, outlet_id }: HortusVirtaeCred): P
                 password: password,
                 outlet_id: outlet_id
             })
-        })
+        }, 'http://localhost:8081/')
     } catch (error) {
         throw new Error('Error while attempting login', error as ErrorOptions)
     }
