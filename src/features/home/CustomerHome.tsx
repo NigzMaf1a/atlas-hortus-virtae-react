@@ -1,5 +1,5 @@
 //hooks
-import useCustomer from "../../hooks/mod/useCustomer"
+import useCustomer from "../../hooks/mod/customer/useCustomer"
 import useCustomerUtils from "../../hooks/util/customer"
 import { useState, useEffect } from "react"
 

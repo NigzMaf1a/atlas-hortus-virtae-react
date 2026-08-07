@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react"
 
 //types
-import type Product from "../../scripts/interfaces/feat/product"
-import type { Sale, SaleItem } from "../../scripts/interfaces/feat/sales"
-import type Payment from "../../scripts/interfaces/feat/payments"
+import type Product from "../../../scripts/interfaces/feat/product"
+import type { Sale, SaleItem } from "../../../scripts/interfaces/feat/sales"
+import type Payment from "../../../scripts/interfaces/feat/payments"
 
 //scripts
-import Customer from "../../scripts/utils/mod/customer"
-import Session from "../../scripts/utils/session"
-import Toaster from "../../scripts/utils/Toaster"
+import Customer from "../../../scripts/utils/mod/customer"
+import Session from "../../../scripts/utils/session"
+import Toaster from "../../../scripts/utils/Toaster"
 
 interface CustomerProps {
     loading: boolean
