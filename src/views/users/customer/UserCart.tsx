@@ -1,3 +1,4 @@
+//hooks
 import { useState } from "react"
 
 //components
@@ -8,7 +9,11 @@ import ButtonAdv from "../../../components/ButtonAdv"
 //styles
 import OrderStyles from "../../../styles/views/order"
 
-export default function Cart() {
+//scripts
+import Session from "../../../scripts/utils/session"
+import Cart from "../../../scripts/utils/cart"
+
+export default function UserCart() {
     const [showModal, setShowModal] = useState<boolean>(false)
 
     function toggleModal() {

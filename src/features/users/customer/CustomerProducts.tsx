@@ -12,7 +12,7 @@ import ListItemWithBtn from "../../../components/ListItemWithBtn"
 import FancyLoad from "../../../views/FancyLoad"
 import MakeOrder from "../../../views/users/customer/MakeOrder"
 import Modal from "../../../components/Modal"
-import Cart from "../../../views/users/customer/Cart"
+import UserCart from "../../../views/users/customer/UserCart"
 
 export default function CustomerProducts() {
     const [showSearch, setShowSearch] = useState<boolean>(false)
@@ -54,7 +54,7 @@ export default function CustomerProducts() {
             >
                 <FancyLoad loading={data.loading} />
 
-                <Cart />
+                <UserCart />
                 <Tray
                     data={filtered}
                     noDataMessage="Sorry, no products found"
