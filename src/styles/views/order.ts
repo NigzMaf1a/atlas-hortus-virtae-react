@@ -12,6 +12,14 @@ interface Cart {
     foot: string
 }
 
+interface CartItem {
+    cont: string
+    left: string
+    right: string
+    btn: string
+    row: string
+}
+
 export default class OrderStyles {
 
     static createOrder(): CreateOrder {
@@ -32,6 +40,16 @@ export default class OrderStyles {
             cont: `w-[250px] h-[400px] flex flex-col rounded-lg border border-neutral-300 bg-white`,
             body: `w-full h-[350px] flex flex-col items-center overflow-y-auto`,
             foot: `w-full flex justify-evenly items-center`
+        }
+    }
+
+    static cartItem(): CartItem {
+        return {
+            cont: `w-full h-[50px] flex flex-row justify-evenly rounded-lg border-neutral-300 p-1`,
+            left: `h-full w-[75%]`,
+            right: `h-full w-[25%] flex justify-center items-center`,
+            btn: `h-[20px] w-[50px]`,
+            row: `flex flex-row h-full grow`
         }
     }
 }

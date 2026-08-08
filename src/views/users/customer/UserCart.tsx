@@ -12,12 +12,24 @@ import OrderStyles from "../../../styles/views/order"
 //scripts
 import Session from "../../../scripts/utils/session"
 import Cart from "../../../scripts/utils/cart"
+import Payments from "../../../scripts/utils/feat/customer/payments"
 
 export default function UserCart() {
     const [showModal, setShowModal] = useState<boolean>(false)
+    const [amount, setAmount] = useState<number>(0)
+    const cart = new Cart(Number(Session.getUser().user_id))
 
     function toggleModal() {
         setShowModal(p => !p)
+    }
+
+    async function pay() {
+        const paid = await Payments.makePayment(amount)
+
+        if (paid) {
+            setAmount(0)
+            toggleModal()
+        }
     }
 
     return (
@@ -46,7 +58,7 @@ export default function UserCart() {
 
                         <ButtonAdv
                             label="Check out"
-                            onClick={() => { }}
+                            onClick={async () => await pay()}
                         />
                     </CustomDiv>
 
