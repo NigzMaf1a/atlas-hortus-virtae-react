@@ -47,6 +47,32 @@ export default class Cart {
         return
     }
 
+    public decrement(product_id: number) {
+        if (this.product_ids.has(product_id)) {
+            if (this.items.has(product_id)) {
+                const exists = this.items.get(Number(product_id)) as CartItem
+
+                if (typeof exists !== 'undefined') {
+                    exists.quantity--
+                    this.items.set(Number(product_id), exists)
+                }
+            }
+        }
+    }
+
+    public increment(product_id: number) {
+        if (this.product_ids.has(product_id)) {
+            if (this.items.has(product_id)) {
+                const exists = this.items.get(Number(product_id)) as CartItem
+
+                if (typeof exists !== 'undefined') {
+                    exists.quantity++
+                    this.items.set(Number(product_id), exists)
+                }
+            }
+        }
+    }
+
     public removeItem(prd: Product) {
         if (this.product_ids.has(Number(prd.outlet_id))) {
             this.product_ids.delete(Number(prd.outlet_id))
@@ -57,7 +83,7 @@ export default class Cart {
     }
 
     public getCartItems() {
-        return this.items
+        return Array.from(this.items.values())
     }
 
     public getCartTotal(): number {

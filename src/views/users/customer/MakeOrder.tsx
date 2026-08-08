@@ -5,13 +5,17 @@ import ButtonAdv from "../../../components/ButtonAdv"
 //styles
 import OrderStyles from "../../../styles/views/order"
 
+//types
+import type Product from "../../../scripts/interfaces/feat/product"
+
 interface Props {
-    toggleModal: () => void
-    addToCart: () => void
+    toggleModal: (prod: Product) => void
+    addToCart: (prod: Product) => void
+    prod: Product
 }
 
 export default function MakeOrder(
-    { toggleModal, addToCart }: Props
+    { toggleModal, addToCart, prod }: Props
 ) {
 
     return (
@@ -20,11 +24,11 @@ export default function MakeOrder(
             <CustomDiv className={OrderStyles.createOrder().foot}>
                 <ButtonAdv
                     label="Close"
-                    onClick={() => toggleModal()}
+                    onClick={() => toggleModal(prod)}
                 />
                 <ButtonAdv
                     label="Add"
-                    onClick={() => addToCart()}
+                    onClick={() => addToCart(prod)}
                 />
             </CustomDiv>
         </CustomDiv>

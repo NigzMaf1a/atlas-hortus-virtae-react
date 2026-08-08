@@ -18,6 +18,8 @@ interface CartItem {
     right: string
     btn: string
     row: string
+    text: string
+    setter: string
 }
 
 export default class OrderStyles {
@@ -45,11 +47,20 @@ export default class OrderStyles {
 
     static cartItem(): CartItem {
         return {
-            cont: `w-full h-[50px] flex flex-row justify-evenly rounded-lg border-neutral-300 p-1`,
+            cont: `w-full h-[50px] flex flex-row justify-evenly rounded-lg bg-blue-500 border-neutral-300 p-1`,
             left: `h-full w-[75%]`,
             right: `h-full w-[25%] flex justify-center items-center`,
             btn: `h-[20px] w-[50px]`,
-            row: `flex flex-row h-full grow`
+            row: `flex flex-row h-full grow`,
+            text: ``,
+            setter: ``
         }
+    }
+
+    static nullOrder(): string {
+        const flex = 'flex flex-row justify-center items-center'
+        const dim = 'w-full border border-neutral-300 h-[80px]'
+
+        return `${flex} ${dim}`
     }
 }
