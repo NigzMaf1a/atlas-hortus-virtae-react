@@ -56,8 +56,8 @@ export default function CustomerProducts() {
         setShowCreate(prev => !prev)
     }
 
-    async function addToCart(prod: Product) {
-        await cart.addToCart(prod)
+    function addToCart(prod: Product) {
+        cart.addToCart(prod)
         Toaster('Product added successfully', 'success')
     }
 
@@ -93,11 +93,13 @@ export default function CustomerProducts() {
             </Page>
 
             <Modal showModal={showCreate}>
-                <MakeOrder
-                    toggleModal={toggleCreate}
-                    addToCart={() => addToCart(selectedProduct as Product)}
-                    prod={selectedProduct as Product}
-                />
+                {selectedProduct && (
+                    <MakeOrder
+                        toggleModal={toggleCreate}
+                        addToCart={addToCart}
+                        prod={selectedProduct}
+                    />
+                )}
             </Modal>
         </>
     )

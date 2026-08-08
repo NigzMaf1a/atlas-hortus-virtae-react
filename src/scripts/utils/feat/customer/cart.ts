@@ -6,110 +6,122 @@ export interface CartItem {
     price: number
 }
 
-type CartStatus = 'Open' | 'Cleared'
+type CartStatus = "Open" | "Cleared"
 
 export default class Cart {
-
     public user_id: number
     public items: Map<number, CartItem> = new Map()
-    public product_ids: Set<number> = new Set()
-    public cart_status: CartStatus
+    public cart_status: CartStatus = "Open"
 
     constructor(user_id: number) {
         this.user_id = user_id
-        this.cart_status = 'Open'
     }
 
-    public addItem(prod: Product) {
-        let cart_item: CartItem
+    public addItem(product: Product): void {
+        const productId = Number(product.product_id)
 
-        if (this.product_ids.has(Number(prod.product_id))) {
-            if (this.items.has(Number(prod.product_id))) {
-                const exists = this.items.get(Number(prod.product_id))
+        const existing = this.items.get(productId)
 
-                if (typeof exists !== 'undefined') {
-                    exists.quantity++
-                    this.items.set(Number(prod.product_id), exists)
-                }
-            }
-        } else {
-            this.product_ids.add(Number(prod.product_id))
+        if (existing) {
+            existing.quantity += 1
 
-            cart_item = {
-                productId: Number(prod.product_id),
-                quantity: 1,
-                price: Number(prod.product_price)
-            }
+            this.items.set(productId, existing)
 
-            this.items.set(Number(prod.product_id), cart_item)
+            return
         }
 
-        return
-    }
-
-    public decrement(product_id: number) {
-        if (this.product_ids.has(product_id)) {
-            if (this.items.has(product_id)) {
-                const exists = this.items.get(Number(product_id)) as CartItem
-
-                if (typeof exists !== 'undefined') {
-                    exists.quantity--
-                    this.items.set(Number(product_id), exists)
-                }
-            }
-        }
-    }
-
-    public increment(product_id: number) {
-        if (this.product_ids.has(product_id)) {
-            if (this.items.has(product_id)) {
-                const exists = this.items.get(Number(product_id)) as CartItem
-
-                if (typeof exists !== 'undefined') {
-                    exists.quantity++
-                    this.items.set(Number(product_id), exists)
-                }
-            }
-        }
-    }
-
-    public removeItem(prd: Product) {
-        if (this.product_ids.has(Number(prd.outlet_id))) {
-            this.product_ids.delete(Number(prd.outlet_id))
-            this.items.delete(Number(prd.outlet_id))
+        const item: CartItem = {
+            productId,
+            quantity: 1,
+            price: Number(product.product_price),
         }
 
-        return
+        this.items.set(productId, item)
+
+        this.cart_status = "Open"
     }
 
-    public getCartItems() {
+    public increment(productId: number): void {
+        const id = Number(productId)
+
+        const item = this.items.get(id)
+
+        if (!item) {
+            return
+        }
+
+        item.quantity += 1
+
+        this.items.set(id, item)
+    }
+
+    public decrement(productId: number): void {
+        const id = Number(productId)
+
+        const item = this.items.get(id)
+
+        if (!item) {
+            return
+        }
+
+        if (item.quantity <= 1) {
+            this.removeItemById(id)
+            return
+        }
+
+        item.quantity -= 1
+
+        this.items.set(id, item)
+    }
+
+    public removeItem(product: Product): void {
+        this.removeItemById(Number(product.product_id))
+    }
+
+    private removeItemById(productId: number): void {
+        this.items.delete(productId)
+    }
+
+    public getCartItems(): CartItem[] {
         return Array.from(this.items.values())
     }
 
     public getCartTotal(): number {
-        let price: number = 0
-
-        if (this.cart_status === 'Open') {
-            for (const [key, value] of this.items) {
-                console.log(key)
-                const item_price: number = value.price * value.quantity
-
-                price += item_price
-            }
+        if (this.cart_status !== "Open") {
+            return 0
         }
 
-        return price
+        let total = 0
+
+        for (const item of this.items.values()) {
+            total += item.price * item.quantity
+        }
+
+        return total
     }
 
-    public clearCart() {
-        this.product_ids.clear()
+    public getItemTotal(productId: number): number {
+        const item = this.items.get(Number(productId))
+
+        if (!item) {
+            return 0
+        }
+
+        return item.price * item.quantity
+    }
+
+    public clearCart(): void {
         this.items.clear()
-        this.cart_status = 'Cleared'
-        return
+        this.cart_status = "Cleared"
     }
 
-    public checkout(clear: boolean) {
-        if (clear) this.clearCart()
-        return
+    public checkout(clear: boolean): void {
+        if (clear) {
+            this.clearCart()
+        }
+    }
+
+    public get product_ids(): Set<number> {
+        return new Set(this.items.keys())
     }
 }
