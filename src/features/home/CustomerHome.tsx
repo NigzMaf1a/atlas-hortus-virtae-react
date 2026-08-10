@@ -7,10 +7,13 @@ import { useState, useEffect } from "react"
 import Page from "../../components/Page"
 import FancyLoad from "../../views/FancyLoad"
 import Tray from "../../components/Tray"
-import Toaster from "../../scripts/utils/Toaster"
+import UserCart from "../../views/users/customer/UserCart"
 
 //styles
 import StylesTwo from "../../styles/components"
+
+//scripts
+import Toaster from "../../scripts/utils/Toaster"
 
 export default function CustomerHome() {
     const [showHotProducts, setShowHotProducts] = useState<boolean>(false)
@@ -55,6 +58,7 @@ export default function CustomerHome() {
             className={StylesTwo.page()}
         >
             <FancyLoad loading={data.loading} />
+            <UserCart products={data.products} />
 
             <Tray
                 show={showHotProducts}
