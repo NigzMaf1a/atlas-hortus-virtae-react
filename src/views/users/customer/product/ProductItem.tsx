@@ -1,3 +1,4 @@
+
 //components
 import CustomDiv from "../../../../components/CustomDiv"
 
@@ -15,7 +16,7 @@ export default function ProductItem(
     { product }: Props
 ) {
     return (
-        <CustomDiv className={ProductStyles.productItem()}>
+        <CustomDiv className={ProductStyles.productItem(product)}>
             ProductItem
         </CustomDiv>
     )
