@@ -1,8 +1,8 @@
 import Styles from "../styles/sections";
 
 interface InputProps {
-    value: string;
-    onChange: (val: string) => void;
+    value: string | number;
+    onChange: (val: string | number) => void;
     type?: React.HTMLInputTypeAttribute;
     placeholder?: string;
     name?: string;

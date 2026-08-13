@@ -4,7 +4,6 @@ import Cart from "./cart"
 import Toaster from "../../Toaster"
 
 export default class Payments {
-    public static user_id = Number(Session.getUser().user_id)
     public static cart = new Cart(this.user_id)
     public static total: number = 0
     public static payment: number = 0

@@ -4,10 +4,19 @@ import CustomDiv from "../../../../components/CustomDiv"
 //styles
 import ProductStyles from "../../../../styles/feat/customer/products"
 
-export default function CartCont() {
+interface Props {
+    showCart: (show: boolean) => void
+}
+
+export default function CartCont(
+    { showCart }: Props
+) {
     return (
         <CustomDiv className={ProductStyles.cart().cont}>
-            <CustomDiv className={ProductStyles.cart().btn}>
+            <CustomDiv
+                className={ProductStyles.cart().btn}
+                onClick={() => showCart(true)}
+            >
                 Order
             </CustomDiv>
         </CustomDiv>
