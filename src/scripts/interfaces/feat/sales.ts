@@ -3,6 +3,7 @@ export interface Sale {
     user_id: number
     outlet_id: number
     sale_date: Date
+    sale_status: 'Ordered' | 'Paid' | 'Served' | 'Cancelled'
     sale_total: number
     sale_discount: number
     sale_price: number
