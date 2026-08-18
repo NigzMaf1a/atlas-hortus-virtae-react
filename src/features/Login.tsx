@@ -121,6 +121,9 @@ export default function Login() {
                 case 'customer':
                     navigate('/customer/home', { replace: true })
                     break
+                case 'operant':
+                    navigate('/operant/home', { replace: true })
+                    break
                 default:
                     Toaster('Your module is still under construction', 'info')
             }

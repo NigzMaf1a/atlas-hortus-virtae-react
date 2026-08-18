@@ -13,12 +13,12 @@ import type Task from "../../../scripts/interfaces/tasks"
 import type TaskAlloc from "../../../scripts/interfaces/task_alloc"
 import type Payment from "../../../scripts/interfaces/feat/payments"
 
-interface OperantInit {
+export interface OperantInit {
     loading: boolean
     sales: Sale[]
     products: Product[]
     taskAllocs: TaskAlloc[]
-    payments: Payment[],
+    payments: Payment[]
 
     //methods
     attendToSale: (sale: Sale) => Promise<boolean>

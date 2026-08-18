@@ -7,6 +7,7 @@ import Login from "../features/Login"
 
 // routes
 import CustomerRoutes from "./CustomerRoutes"
+import OperantRoutes from "./OperantRoutes"
 
 export default function AppRoutes() {
     return (
@@ -29,6 +30,11 @@ export default function AppRoutes() {
             {/* Customer routes */}
             <Route
                 path="/customer/*"
+                element={<CustomerRoutes />}
+            />
+
+            <Route
+                path="/operant/*"
                 element={<CustomerRoutes />}
             />
         </Routes>

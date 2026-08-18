@@ -5,23 +5,28 @@ import OperantHome from "../features/home/OperantHome"
 import OperantOrders from "../features/users/operant/OperantOrders"
 import OperantProducts from "../features/users/operant/OperantProducts"
 
+//context
+import { OperantProvider } from "@/contexts/useOperantContext"
+
 export default function OperantRoutes() {
     return (
-        <Routes>
-            <Route
-                path="home"
-                element={<OperantHome />}
-            />
+        <OperantProvider>
+            <Routes>
+                <Route
+                    path="home"
+                    element={<OperantHome />}
+                />
 
-            <Route
-                path="orders"
-                element={<OperantOrders />}
-            />
+                <Route
+                    path="orders"
+                    element={<OperantOrders />}
+                />
 
-            <Route
-                path="products"
-                element={<OperantProducts />}
-            />
-        </Routes>
+                <Route
+                    path="products"
+                    element={<OperantProducts />}
+                />
+            </Routes>
+        </OperantProvider>
     )
 }
