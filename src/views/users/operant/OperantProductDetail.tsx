@@ -26,6 +26,7 @@ export default function OperantProductDetail(
 ) {
     const [available, setAvailable] = useState<boolean>(false)
     const [name, setName] = useState<string>('')
+    const [price, setPrice] = useState<string>('')
     const [edit, setEdit] = useState<boolean>(false)
 
     useEffect(() => {
@@ -94,7 +95,30 @@ export default function OperantProductDetail(
                     </CardContent>
                 </CardContent>
 
-                <CardContent></CardContent>
+                <CardContent className="flex flex-col gap-2">
+                    <Card className="w-full h-10 border rounded-sm">
+
+                    </Card>
+
+                    <LabelledInput
+                        label="Name"
+                        value={name}
+                        onChange={setName}
+                        placeholder="Please enter a product name here"
+                    />
+
+                    <LabelledInput
+                        label="Price"
+                        value={price}
+                        onChange={setPrice}
+                        placeholder="Please enter a product name here"
+                    />
+
+                    <Button className={'text-white bg-green-500 hover:bg-green-700 hover:cursor-pointer'}>
+                        Submit
+                    </Button>
+
+                </CardContent>
             </CardContent>
 
 
