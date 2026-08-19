@@ -1,4 +1,5 @@
-import useOperant from "../../hooks/mod/operant/useOperant"
+//hooks
+import useOperantContext from "@/contexts/useOperantContext"
 
 //components
 import Page from "../../components/Page"
@@ -7,7 +8,8 @@ import Tray from "../../components/Tray"
 import ButtonedListItem from "../../components/ButtonedListItem"
 
 export default function OperantHome() {
-    const operant = useOperant()
+    const operant = useOperantContext()
+    console.log('Operant', operant)
 
     return (
         <Page>

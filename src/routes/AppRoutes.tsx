@@ -35,7 +35,7 @@ export default function AppRoutes() {
 
             <Route
                 path="/operant/*"
-                element={<CustomerRoutes />}
+                element={<OperantRoutes />}
             />
         </Routes>
     )

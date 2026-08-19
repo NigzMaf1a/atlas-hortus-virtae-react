@@ -63,4 +63,20 @@ export default class Operant extends Users {
             Toaster('Fix crud method', 'warn')
         }
     }
+
+    async markProductUnavailable(product_id: number) {
+        try {
+            await this.apiFetch(this.endpoints.product.mark_unavailable(product_id))
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async markProductAvailable(product_id: number) {
+        try {
+            await this.apiFetch(this.endpoints.product.mark_available(product_id))
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }

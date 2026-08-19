@@ -42,7 +42,9 @@ const endpoints = {
     product: {
         post: `/api/products/post`,
         get: `/api/products/get`,
-        get_by_outlet_id: (id: number) => `/api/products/outlet/${id}`
+        get_by_outlet_id: (id: number) => `/api/products/outlet/${id}`,
+        mark_available: (prod_id: number) => `/api/products/patch/${prod_id}`,
+        mark_unavailable: (prod_id: number) => `/api/products/patch/${prod_id}`
     },
     sales: {
         post: `/api/sales/post`,

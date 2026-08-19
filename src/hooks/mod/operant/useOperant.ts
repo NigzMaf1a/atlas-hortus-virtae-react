@@ -25,6 +25,8 @@ export interface OperantInit {
     attendToTask: (task: Task) => Promise<boolean>
     addProduct: (prod: Product) => Promise<boolean>
     getSaleItems: (id: number) => Promise<SaleItem[]>
+    markAvailable: (prod_id: number) => Promise<boolean>
+    markUnavailable: (prod_id: number) => Promise<boolean>
 }
 
 export default function useOperant(): OperantInit {
@@ -36,28 +38,45 @@ export default function useOperant(): OperantInit {
 
     const operant = new Operant(Session.getToken())
 
-    useEffect(() => {
-        async function init() {
-            try {
-                const s = await operant.getSales(Number(Session.getOutletId()))
-                const p = await operant.getProducts(Number(Session.getOutletId()))
-                const pays = await operant.getPayments()
-                const ta = await operant.getTaskAllocs()
+    async function init() {
+        try {
+            const ta: TaskAlloc[] = []
+            const s = await operant.getSales(Number(Session.getOutletId()))
+            Toaster('Sales fetched successfully')
+            const p = await operant.getProducts(Number(Session.getOutletId()))
+            Toaster('Products fetched successfully')
+            const pays = await operant.getPayments()
+            Toaster('Payments fetched successfully')
+            // const ta = await operant.getTaskAllocs()
+            // Toaster('Task allocations fetched successfully')
 
-                setSales(s)
-                setProducts(p)
-                setPayments(pays)
-                setTaskAllocs(ta)
+            setSales(s)
+            setProducts(p)
+            setPayments(pays)
+            setTaskAllocs(ta)
 
-                Toaster('Initialization successful', 'success')
-            } catch (error) {
-                Toaster('An error occurred while initializing data', 'danger')
-            } finally {
-                setLoading(false)
-            }
+            Toaster('Initialization successful', 'success')
+        } catch (error) {
+            Toaster('An error occurred while initializing data', 'danger')
+        } finally {
+            setLoading(false)
         }
+    }
 
+    useEffect(() => {
         init()
+    }, [])
+
+    useEffect(() => {
+        window.addEventListener('beforeunload', async () => {
+            if (!loading) await init()
+        })
+
+        return () => {
+            window.addEventListener('beforeunload', async () => {
+                if (!loading) await init()
+            })
+        }
     }, [])
 
     return {
@@ -104,6 +123,24 @@ export default function useOperant(): OperantInit {
                 return await operant.getSaleItems(sale_id)
             } catch (error) {
                 return []
+            }
+        },
+
+        markAvailable: async function (prod_id: number) {
+            try {
+                await operant.markProductAvailable(prod_id)
+                return true
+            } catch (error) {
+                return false
+            }
+        },
+
+        markUnavailable: async function (prod_id: number) {
+            try {
+                await operant.markProductUnavailable(prod_id)
+                return true
+            } catch (error) {
+                return false
             }
         }
     }
