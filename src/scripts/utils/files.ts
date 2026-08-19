@@ -19,18 +19,18 @@ export default class Files {
         file: File,
         endpoint: string
     ): Promise<{ url: string }> {
-        const formData = new FormData();
-        formData.append("image", file);
+        const formData = new FormData()
+        formData.append("image", file)
 
         const response = await fetch(endpoint, {
             method: "POST",
             body: formData,
-        });
+        })
 
         if (!response.ok) {
-            throw new Error(`Image upload failed: ${response.status}`);
+            throw new Error(`Image upload failed: ${response.status}`)
         }
 
-        return response.json();
+        return response.json()
     }
 }
