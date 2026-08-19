@@ -14,4 +14,23 @@ export default class Files {
             input.click()
         })
     }
+
+    static async uploadImage(
+        file: File,
+        endpoint: string
+    ): Promise<{ url: string }> {
+        const formData = new FormData();
+        formData.append("image", file);
+
+        const response = await fetch(endpoint, {
+            method: "POST",
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error(`Image upload failed: ${response.status}`);
+        }
+
+        return response.json();
+    }
 }
