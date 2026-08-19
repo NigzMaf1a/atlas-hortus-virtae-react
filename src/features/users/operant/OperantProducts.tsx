@@ -37,8 +37,6 @@ export default function OperantProducts() {
         if (selectedProduct) setShowDetail(true)
     }
 
-    const btn_styles = ''
-
     return (
         <Page
             showSearch={true}
@@ -49,14 +47,17 @@ export default function OperantProducts() {
         >
             <FancyLoad loading={loading} />
 
-            <CustomDiv className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {filtered.map((p) => (
-                    <OperantProduct
-                        key={p.product_id}
-                        product={p}
-                    />
-                ))}
-            </CustomDiv>
+            {
+                !showDetail && <CustomDiv className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {filtered.map((p) => (
+                        <OperantProduct
+                            key={p.product_id}
+                            product={p}
+                            onClick={() => view(p)}
+                        />
+                    ))}
+                </CustomDiv>
+            }
 
             {
                 showDetail && <OperantProductDetail
