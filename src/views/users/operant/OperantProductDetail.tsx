@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { Card, CardHeader, CardFooter, CardTitle, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import LabelledText from "@/components/LabelledText"
+import LabelledInput from "@/components/LabelledInput"
 
 //types
 import type Product from "@/scripts/interfaces/feat/product"
@@ -24,6 +25,7 @@ export default function OperantProductDetail(
     }: Props
 ) {
     const [available, setAvailable] = useState<boolean>(false)
+    const [name, setName] = useState<string>('')
     const [edit, setEdit] = useState<boolean>(false)
 
     useEffect(() => {
@@ -72,7 +74,7 @@ export default function OperantProductDetail(
     return (
         <Card className="w-full h-full border border-neutral-200">
             <CardHeader className={styles.header}>
-                <CardTitle>{prod.product_name}</CardTitle>
+                <CardTitle className={'text-orange-400'}>{prod.product_name}</CardTitle>
             </CardHeader>
 
             <CardContent className={`${styles.content}`}>
