@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 //components
 import CustomDiv from "../components/CustomDiv"
@@ -11,7 +11,7 @@ import MenuStyles from "../styles/views/menu"
 import Session from "../scripts/utils/session"
 
 export default function Menu() {
-    const [regtype] = useState<string>(Session.getUser().reg_type)
+    const regtype = Session.getUser().reg_type
 
     return (
         <CustomDiv className={MenuStyles.menuContainer()}>

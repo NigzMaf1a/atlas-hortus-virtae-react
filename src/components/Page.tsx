@@ -61,9 +61,9 @@ export default function Page({
     return (
         <div className="w-screen h-screen flex overflow-hidden">
 
-            {/* {
+            {
                 route !== '/login' && <Menu />
-            } */}
+            }
 
             <div className={`${stylez.container} ${stylez.colors} flex-1`}>
                 {showSearch && (
