@@ -21,7 +21,7 @@ export default function LabelledInput(
             <Text text={label} variant='caption' color="green" />
             <Input
                 value={value}
-                onChange={onChange}
+                onChange={onChange as (val: string | number) => void}
                 placeholder={placeholder}
             />
         </CustomDiv>

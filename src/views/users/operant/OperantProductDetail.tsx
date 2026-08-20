@@ -64,7 +64,24 @@ export default function OperantProductDetail(
         setEdit(prev => !prev)
     }
 
-    async function editProduct() { }
+    async function editProduct() {
+        if (!file) {
+            Toaster('Please select a photo to upload')
+            return
+        }
+
+        if (!name.trim()) {
+            Toaster('Please enter a valid name')
+            return
+        }
+
+        const p = Number(price.trim())
+
+        if (!p) {
+            Toaster('Please enter a valid price')
+            return
+        }
+    }
 
     const btn = 'w-30 h-10 text-white'
 
@@ -72,7 +89,7 @@ export default function OperantProductDetail(
         header: `w-full flex justify-center items-center`,
         content: `w-full h-[85%] grid grid-cols-2`,
         btn_back: `${btn} bg-blue-500 hover:bg-blue-700`,
-        btn_acc: `${btn} bg-green-500 hover:bg-green-700`,
+        btn_acc: `${btn} bg-yellow-500 hover:bg-yellow-700`,
         footer: `w-full h-[5%] flex flex-row justify-evenly items-center`,
         prod_detail: ``,
     }
@@ -132,7 +149,10 @@ export default function OperantProductDetail(
                         placeholder="Please enter a product name here"
                     />
 
-                    <Button className={'text-white bg-green-500 hover:bg-green-700 hover:cursor-pointer'}>
+                    <Button
+                        className={'text-white bg-yellow-500 hover:bg-yellow-700 hover:cursor-pointer'}
+                        onClick={async () => await editProduct()}
+                    >
                         Submit
                     </Button>
 
