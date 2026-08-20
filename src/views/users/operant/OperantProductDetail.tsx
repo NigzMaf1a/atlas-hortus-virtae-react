@@ -11,6 +11,10 @@ import type Product from "@/scripts/interfaces/feat/product"
 
 //scripts
 import Toaster from "@/scripts/utils/Toaster"
+import Files from "@/scripts/utils/files"
+
+//assets
+import uploadIcon from "@/assets/upload.png"
 
 interface Props {
     prod: Product
@@ -28,6 +32,7 @@ export default function OperantProductDetail(
     const [name, setName] = useState<string>('')
     const [price, setPrice] = useState<string>('')
     const [edit, setEdit] = useState<boolean>(false)
+    const [file, setFile] = useState<File | null>(null)
 
     useEffect(() => {
         setAvailable(prod.available === 'Yes' ? true : false)
@@ -96,8 +101,21 @@ export default function OperantProductDetail(
                 </CardContent>
 
                 <CardContent className="flex flex-col gap-2">
-                    <Card className="w-full h-10 border rounded-sm">
+                    <Card
+                        className="relative w-full h-10 rounded-sm border p-0 hover:cursor-pointer"
+                        onClick={async () => {
+                            const f = await Files.selectImage()
 
+                            if (typeof f !== null) {
+                                setFile(f)
+                            }
+                        }}
+                    >
+                        <img
+                            src={uploadIcon}
+                            alt="Upload"
+                            className="absolute left-1/2 top-1/2 w-5 h-5 -translate-x-1/2 -translate-y-1/2 object-contain"
+                        />
                     </Card>
 
                     <LabelledInput
